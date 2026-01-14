@@ -1,0 +1,18 @@
+# CI Build Workflow - Uses reusable build template
+name: CI Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-macos:
+    name: Build macOS (Apple Silicon)
+    uses: ./.github/workflows/build-app.yml
+    with:
+      platform: darwin/arm64
+      retention-days: 30

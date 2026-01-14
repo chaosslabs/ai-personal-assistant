@@ -1,0 +1,19 @@
+{
+  "$schema": "https://wails.io/schemas/config.v2.json",
+  "name": "memoria",
+  "outputfilename": "memoria",
+  "frontend:install": "npm install",
+  "frontend:build": "npm run build",
+  "frontend:dev:watcher": "npm run dev",
+  "frontend:dev:serverUrl": "auto",
+  "author": {
+    "name": "Platform Labs",
+    "email": "tech@platformlabs.co"
+  },
+  "info": {
+    "productName": "memoria",
+    "productVersion": "0.1.0-dev",
+    "copyright": "Copyright © 2024 Platform Labs. All rights reserved.",
+    "comments": "Your private, adaptive AI assistant"
+  }
+}

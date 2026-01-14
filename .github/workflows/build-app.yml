@@ -1,0 +1,56 @@
+# Reusable workflow for building Memoria across platforms
+# Uses Makefile commands for consistency between CI and local builds
+name: Build App
+
+on:
+  workflow_call:
+    inputs:
+      platform:
+        description: 'Platform to build for (darwin/arm64)'
+        required: true
+        type: string
+      retention-days:
+        description: 'Artifact retention days'
+        required: false
+        type: number
+        default: 30
+
+env:
+  GO_VERSION: '1.23'
+  NODE_VERSION: '20'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # Install Wails CLI
+      - name: Install Wails
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+
+      # Run complete CI build pipeline from Makefile
+      - name: Run CI build for macOS
+        if: inputs.platform == 'darwin/arm64'
+        working-directory: desktop-app
+        run: make ci-build-macos
+
+      # Upload macOS artifact
+      - name: Upload macOS artifact
+        if: inputs.platform == 'darwin/arm64'
+        uses: actions/upload-artifact@v4
+        with:
+          name: memoria-darwin-arm64
+          path: desktop-app/build/bin/memoria-darwin-arm64.tar.gz
+          retention-days: ${{ inputs.retention-days }}
