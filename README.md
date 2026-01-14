@@ -104,5 +104,5 @@ The app includes built-in test methods:
 
 - **Local-first**: All data stored locally, no cloud dependencies
 - **User control**: Complete data ownership and deletion
-- **Optional cloud**: Future OpenAI Whisper API integration with user consent
+- **Optional cloud**: In the future, we might wanna create some sort of API to enable some actions - hopefully storing as little as possible. But if we do that, we would need to figure out hosting & possibly offer some paid plans to pay for its storage.
 - **Secure storage**: Database encryption and keychain integration planned
